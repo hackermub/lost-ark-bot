@@ -1,6 +1,11 @@
 {
-    "TOKEN": "discord bot token",
-    "PREFIX": "symble you want to use before command. For example -command , !command (Do not use / ) ",
-    "DEV": "put your discord user id(s) to be able to perform developer only commands, put admin ids too "
-    
+    "BOT_TOKEN": "discord bot token",
+    "BOT_PREFIX": "symble you want to use before command. For example -command , !command (Do not use / ) ",
+    "DEVS": "put your discord user id(s) to be able to perform developer only commands, put admin ids too ",
+
+    "TIMEZONE": "Europe/Paris",
+
+    "GUILD_ID": "Put your server id",
+    "MESSAGE_CHANNEL_ID": "Put the text channel id where messages will be sent at 11 am "
+
 }

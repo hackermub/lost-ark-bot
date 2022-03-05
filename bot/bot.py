@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord import ui
 import os,json
 from pathlib import Path
+from pytz import timezone
 
 # Bot subclass
 class BotSubclass(commands.Bot):
@@ -11,7 +12,7 @@ class BotSubclass(commands.Bot):
 
         config_path = "config.json"
         if os.path.exists('debugconfig.json'): # Use configurations for test server
-            config.json = 'debugconfig.json'
+            config_path = 'debugconfig.json'
 
         # Get Tokens and global variables
         with open(config_path, "r") as config:
@@ -21,12 +22,18 @@ class BotSubclass(commands.Bot):
             self.PREFIX = self._DATA["BOT_PREFIX"]
             self.DEVS = self._DATA['DEVS']
 
+            self.TIMEZONE = timezone(self._DATA['TIMEZONE'])
+
+            self.GUILD_ID = self._DATA['GUILD_ID']
+            self.MESSAGE_CHANNEL_ID = self._DATA['MESSAGE_CHANNEL_ID']
+
 
         self._cogs = [p.stem for p in Path(".").glob("./bot/cogs/*.py")]
-        self.setup()
         self._intents = discord.Intents().all()
 
         super().__init__(command_prefix=self.prefix, intents = self._intents, case_insensitive=True)
+        self.setup()
+
 
     #Bot login,logout and setup
 
@@ -69,6 +76,8 @@ class BotSubclass(commands.Bot):
         await self.register_commands()
         
         print(f"Logged in as {self.user}")
+
+        self.guild = await self.fetch_guild(self.GUILD_ID)
 
         await self.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name =f"{self.PREFIX}help"))
         print(discord.__version__)
