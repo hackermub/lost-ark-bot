@@ -6,6 +6,7 @@
     "TIMEZONE": "Europe/Paris",
 
     "GUILD_ID": "Put your server id",
-    "MESSAGE_CHANNEL_ID": "Put the text channel id where messages will be sent at 11 am "
+    "MESSAGE_CHANNEL_ID": "Put the text channel id where messages will be sent at 11 am ",
+    "ROLE_ID": "Put the id of Rapple role"
 
 }

@@ -27,7 +27,7 @@ class BotSubclass(commands.Bot):
 
             self.GUILD_ID = self._DATA['GUILD_ID']
             self.MESSAGE_CHANNEL_ID = self._DATA['MESSAGE_CHANNEL_ID']
-
+            self.ROLE_ID = self._DATA['ROLE_ID']
 
         self._cogs = [p.stem for p in Path(".").glob("./bot/cogs/*.py")]
         self._intents = discord.Intents().all()
