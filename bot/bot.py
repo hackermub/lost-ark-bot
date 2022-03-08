@@ -1,4 +1,3 @@
-from glob import glob
 import discord
 from discord.ext import commands
 from discord import ui
@@ -53,7 +52,7 @@ class BotSubclass(commands.Bot):
     def run(self):
 
         print('Running Bot')
-        super().run(self._TOKEN)
+        super().run(str(self._TOKEN))
 
     async def shutdown(self):
         print("Closing connection to Discord...")
@@ -73,9 +72,8 @@ class BotSubclass(commands.Bot):
         print("Bot disconnected.")
 
     async def on_ready(self):
-
-        await self.register_commands()
         
+        await self.register_commands()
         print(f"Logged in as {self.user}")
 
         self.guild = await self.fetch_guild(self.GUILD_ID)

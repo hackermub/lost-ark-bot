@@ -1,4 +1,3 @@
-from email import message
 import discord
 from discord.ext import commands
 import logging

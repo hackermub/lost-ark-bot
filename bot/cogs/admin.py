@@ -1,9 +1,7 @@
-from email import message
-from email.policy import default
-from tabnanny import check
-import discord
+import discord 
+from discord import slash_command
 from discord.ext import commands
-from discord.commands import slash_command,permissions
+from discord.commands import permissions
 
 # Admin/Dev only commands
 class Admin(commands.Cog):
