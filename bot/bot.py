@@ -60,6 +60,12 @@ class BotSubclass(commands.Bot):
 
     async def close(self):
         print("Closing on keyboard interrupt...")
+        for vc in self.voice_clients:
+            if hasattr(vc,"cleanup_and_disconnect"):
+                await vc.cleanup_and_disconnect()
+            else:
+                await vc.disconnect()
+        await super().close()
         await self.shutdown()
 
     async def on_connect(self):

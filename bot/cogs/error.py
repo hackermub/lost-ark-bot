@@ -4,11 +4,18 @@ import logging
 
 # Custom exceptions
 class Error:
+    class QueueIsEmpty(commands.CommandError):
+        pass
+    class QueueIsEnded(commands.CommandError):
+        pass
 
-    # class ErrorName(commands.CommandError):
-    #     pass
+    class NoVoiceChannel(commands.CommandError):
+        pass
 
-    pass
+    class AlreadyConnectedToChannel(commands.CommandError):
+        pass
+    class TrackAlreadyInQueue(commands.CommandError):
+        pass
 
 
 #Error handler Cog
