@@ -123,7 +123,17 @@ class Music(commands.Cog):
                 return await ctx.respond("Invalid or unavailable link")
 
         else:
-            return await ctx.respond("Spotify link not yet implemented")
+            link = api.checkSpotify(query)
+            if not link:
+                return await ctx.respond("Invalid spotify link")
+
+            try:
+                spotifyTrack = await api.getSpotifyTrack(self.bot,link)
+            except:
+                return await ctx.respond("Invalid or unavailable link")
+
+            query = spotifyTrack["name"] + " " + spotifyTrack["artists"][0]["name"]
+            youtubeTrack = await api.searchYoutube(self.bot,query)
 
         song = track.Track(self.bot,ctx.author,youtubeTrack)
         response = f" `{song.get_title()}` added to queue"

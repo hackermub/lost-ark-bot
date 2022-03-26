@@ -1,5 +1,20 @@
 import wavelink 
 from discord.ext import commands
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+
+# Authenticates for spotify api
+def authSpotify(bot: commands.Bot):
+    if hasattr(bot, "spotify"):
+        return bot.spotify
+
+    token = SpotifyClientCredentials(
+                    client_id=bot.SPOTIFY_ID,
+                    client_secret=bot.SPOTIFY_SECRET, 
+            )
+
+    bot.spotify = spotipy.Spotify(auth_manager=token)
+    return bot.spotify
 
 def checkSpotify(msg: str):
     if "open.spotify.com/track/" in msg:
@@ -21,9 +36,9 @@ def checkYoutube(msg: str):
             return link[:11]
 
 
-# async def getSpotifyTrack(bot: commands.Bot,id: str):
-#     spotify = authSpotify(bot)
-#     return spotify.track(id)
+async def getSpotifyTrack(bot: commands.Bot,id: str):
+    spotify = authSpotify(bot)
+    return spotify.track(id)
 
 async def getYoutubeTrack(bot: commands.Bot,id: str):
     tracks = await bot.node.get_tracks(query=id,cls=wavelink.abc.Playable)

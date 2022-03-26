@@ -7,6 +7,9 @@
 
     "GUILD_ID": "Put your server id",
     "MESSAGE_CHANNEL_ID": "Put the text channel id where messages will be sent at 11 am ",
-    "ROLE_ID": "Put the id of Rapple role"
+    "ROLE_ID": "Put the id of Rapple role",
+
+    "SPOTIFY_ID": "Put your spotify client id",
+    "SPOTIFY_SECRET": "Put your spotify client secret"
 
 }

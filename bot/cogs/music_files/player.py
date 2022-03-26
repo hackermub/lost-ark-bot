@@ -1,5 +1,5 @@
 import discord
-from discord import ui
+from discord import has_any_role, ui
 import wavelink
 import logging
 
@@ -26,8 +26,9 @@ class Player(wavelink.Player):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self._queue = []
-        self.loop = self.Loop.OFF # TODO
-        self.vote_skip = False # TODO
+        self.loop = self.Loop.OFF 
+        self.vote_skip = True 
+        self.votes = set()
         self._now_playing = 0 # Always 0, just to keep consistent with old code
 
     async def cleanup_and_disconnect(self):
@@ -111,7 +112,7 @@ class Player(wavelink.Player):
     async def start_playback(self,track: Track):
         embed = track.get_link_embed(f'Now Playing', self.Loop.name[self.loop])
         embed.set_author(name = f"Picked by - {track.picked_by.display_name}",icon_url=track.picked_by.display_avatar.url)
-
+        self.votes = set()
         view = self.get_view()
 
         # Play track and set controller message
@@ -216,8 +217,26 @@ class Player(wavelink.Player):
         view.add_item(self.View.Button(emoji= self.Emoji.fast_forward,row = 0,callback= fast_forward))
 
         # Next Track Button
-        async def next_track(button,interaction):
-            await self.next_track()
+        async def next_track(button,interaction:discord.Interaction):
+
+            allowed_roles = ["STAFF"] # Add all the allowed roles here
+            user_roles = [role.name for role in interaction.user.roles]
+            for role in allowed_roles:
+                if role in user_roles:
+                    return await self.next_track()
+
+            self.votes.add(interaction.user.id)
+            votes = len(self.votes)
+            tot = len( [ member for member in self.channel.members if not member.bot] )
+            req = (tot+2)//2
+            if  req <= votes:
+                return await self.next_track()
+
+            track = self._queue[0]
+            embed = track.get_link_embed(f'Now Playing', self.Loop.name[self.loop] + f" . Total votes to skip {votes}, {req} required")
+            embed.set_author(name = f"Picked by - {track.picked_by.display_name}",icon_url=track.picked_by.display_avatar.url)
+            await interaction.response.edit_message(embed = embed)
+            
 
         view.add_item(self.View.Button(emoji= self.Emoji.next,row = 0,callback= next_track))
         
@@ -256,3 +275,4 @@ class Player(wavelink.Player):
             else:
                 self._page = self._page + 1 
             await self.update(interaction)
+
