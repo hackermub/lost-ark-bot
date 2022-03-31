@@ -27,6 +27,7 @@ class BotSubclass(commands.Bot):
             self.GUILD_ID = self._DATA['GUILD_ID']
             self.MESSAGE_CHANNEL_ID = self._DATA['MESSAGE_CHANNEL_ID']
             self.ROLE_ID = self._DATA['ROLE_ID']
+            self.NEWS_CHANNEL_ID = self._DATA['NEWS_CHANNEL_ID']
 
             self.SPOTIFY_ID = self._DATA['SPOTIFY_ID']
             self.SPOTIFY_SECRET = self._DATA['SPOTIFY_SECRET']
