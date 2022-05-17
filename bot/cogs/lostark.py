@@ -98,7 +98,7 @@ class LostArk(commands.Cog):
         self.update_news.cancel()
 
     # Updates Lost Ark news every 5 minutes.
-    @tasks.loop(seconds=10)
+    @tasks.loop(minutes=5)
     async def update_news(self):
         await self.bot.wait_until_ready()
         news_channel = await self.bot.fetch_channel(int(self.bot.NEWS_CHANNEL_ID))

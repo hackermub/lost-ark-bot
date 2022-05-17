@@ -5,6 +5,8 @@ import os,json
 from pathlib import Path
 from pytz import timezone
 
+from .database.db_setup import Database
+
 # Bot subclass
 class BotSubclass(commands.Bot):
 
@@ -31,6 +33,8 @@ class BotSubclass(commands.Bot):
 
             self.SPOTIFY_ID = self._DATA['SPOTIFY_ID']
             self.SPOTIFY_SECRET = self._DATA['SPOTIFY_SECRET']
+
+            self.db = Database(self._DATA['MONGO_URI'])
 
         self._cogs = [p.stem for p in Path(".").glob("./bot/cogs/*.py")]
         self._intents = discord.Intents().all()

@@ -11,6 +11,8 @@
     "NEWS_CHANNEL_ID": "Put the text channel id where news will be sent",
 
     "SPOTIFY_ID": "Put your spotify client id",
-    "SPOTIFY_SECRET": "Put your spotify client secret"
+    "SPOTIFY_SECRET": "Put your spotify client secret",
+
+    "MONGO_URI": "Goto your mongoDB cluster-> click on connect -> choose Connect your application -> Choose python and 3.6 and above and copy the URI"
 
 }
